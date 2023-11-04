@@ -1,0 +1,26 @@
+<div class="container mt-4">
+    <div class="card">
+      <div class="card-header">
+        Job Details
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{ jobDescription.companyname }}</h5>
+        <p class="card-text"><strong>Type:</strong> {{ jobDescription.type }}</p>
+        <p class="card-text"><strong>About:</strong> {{ jobDescription.about }}</p>
+        <p class="card-text"><strong>Headquarter:</strong> {{ jobDescription.headquarter }}</p>
+        <p class="card-text"><strong>Posted Date:</strong> {{ jobDescription.postedDate | date: 'short' }}</p>
+        <p class="card-text"><strong>Location:</strong> {{ jobDescription.location.city }}, {{ jobDescription.location.state }}, {{ jobDescription.location.country }}</p>
+        <p class="card-text"><strong>Requirements:</strong> {{ jobDescription.requirements.degree }} with {{ jobDescription.requirements.yearOfExperience }} years of experience in {{ jobDescription.requirements.profile }}</p>
+        <p class="card-text"><strong>Skills Required:</strong> {{ jobDescription.requirements.skills.join(', ') }}</p>
+        <p class="card-text"><strong>Salary:</strong> ${{ jobDescription.salary }}</p>
+        <button class="btn btn-primary" (click)="toggleSaveUnsave()">
+          {{ isSaved ? 'Unsave' : 'Save' }}
+        </button>
+        <button class="btn btn-primary" (click)="applyForJob(jobDescription._id)" [disabled]="isApplied">
+          {{ isApplied ? 'Applied' : 'Apply' }}
+        </button>
+        <input type="file" (change)="onFileSelected($event)" />
+      </div>
+    </div>
+  </div>
+  

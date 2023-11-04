@@ -1,11 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const session = require('express-session');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-const cors = require('cors');
 const User = require('./models/user'); // Import the User model from the shared library
+const Profile = require('./models/profile'); // Import the Profile model
 
 const router = express.Router(); // Create a router
 
@@ -15,19 +14,7 @@ mongoose.connect('mongodb://localhost:27017/job_portal', {
   useUnifiedTopology: true,
 });
 
-const secretKey = crypto.randomBytes(32).toString('hex');
-
 router.use(bodyParser.json());
-router.use(
-  session({
-    secret: secretKey,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      maxAge: 60 * 60 * 1000, // Set the session duration to 1 hour (in milliseconds)
-    },
-  })
-);
 // Login endpoint
 router.post('/', async (req, res) => {
   try {
@@ -46,11 +33,17 @@ router.post('/', async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
+     // Check if a profile exists for the user
+     const userProfile = await Profile.findOne({ userId: user._id });
+
+     // Set the hasProfile flag based on the presence of a profile
+     const hasProfile = userProfile ? true : false;
+
     req.session.userId = user._id;
-    console.log('check1', req.session.userId);
-    res.status(200).json({ message: 'Login successful' });
+
+    return res.status(200).json({ message: 'ok',hasProfile });
   } catch (error) {
-    res.status(500).json({ error: 'Login failed', detail: error.message });
+    return res.status(500).json({ error: 'Login failed', detail: error.message });
   }
 });
 

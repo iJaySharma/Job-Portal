@@ -11,6 +11,7 @@ const jobListingSchema = new mongoose.Schema({
     type: String,
     about: String,
     headquarter: String,
+    postedDate: { type: Date, default: Date.now },
   
   location: {
     city: String,

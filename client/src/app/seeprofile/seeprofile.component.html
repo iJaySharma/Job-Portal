@@ -1,0 +1,66 @@
+<div class="container mt-4">
+  <h2>User Profile</h2>
+  <form>
+    <!-- First Name and Last Name -->
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" class="form-control" id="firstName" [(ngModel)]="userProfile.name.firstName" name="firstName" [readonly]="!isEditMode">
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" class="form-control" id="lastName" [(ngModel)]="userProfile.name.lastName" name="lastName" [readonly]="!isEditMode">
+    </div>
+
+    <!-- Self Overview -->
+    <div class="form-group">
+      <label for="selfOverview">Self Overview</label>
+      <textarea class="form-control" id="selfOverview" [(ngModel)]="userProfile.selfOverview" name="selfOverview" [readonly]="!isEditMode"></textarea>
+    </div>
+
+    <!-- Education -->
+    <div class="form-group">
+      <h3>Education</h3>
+      <div *ngFor="let educationItem of userProfile.education; let i = index">
+        <p><strong>Institute:</strong> <input type="text" class="form-control" [(ngModel)]="userProfile.education[i].institute" name="institute" [readonly]="!isEditMode"></p>
+        <p><strong>Degree:</strong> <input type="text" class="form-control" [(ngModel)]="userProfile.education[i].degree" name="degree" [readonly]="!isEditMode"></p>
+        <p><strong>Aggregate:</strong> <input type="number" class="form-control" [(ngModel)]="userProfile.education[i].aggregate" name="aggregate" [readonly]="!isEditMode"></p>
+        <p><strong>Passing Date:</strong> <input type="date" class="form-control" [(ngModel)]="userProfile.education[i].passingDate" name="passingDate" [readonly]="!isEditMode"></p>
+      </div>
+    </div>
+
+    <!-- Experience -->
+    <div class="form-group">
+      <h3>Experience</h3>
+      <div *ngFor="let experienceItem of userProfile.experience; let i = index">
+        <p><strong>Job Title:</strong> <input type="text" class="form-control" [(ngModel)]="userProfile.experience[i].jobTitle" name="jobTitle" [readonly]="!isEditMode"></p>
+        <p><strong>Company Name:</strong> <input type="text" class="form-control" [(ngModel)]="userProfile.experience[i].companyName" name="companyName" [readonly]="!isEditMode"></p>
+        <p><strong>Description:</strong> <textarea class="form-control" [(ngModel)]="userProfile.experience[i].description" name="description" [readonly]="!isEditMode"></textarea></p>
+        <p><strong>Period:</strong> <input type="text" class="form-control" [(ngModel)]="userProfile.experience[i].period" name="period" [readonly]="!isEditMode"></p>
+      </div>
+    </div>
+
+    <!-- Portfolio Links -->
+    <div class="form-group">
+      <h3>Portfolio Links</h3>
+      <ul>
+        <li *ngFor="let link of userProfile.portfolioLinks; let i = index">
+          <input type="text" class="form-control" [(ngModel)]="userProfile.portfolioLinks[i]" name="portfolioLink" [readonly]="!isEditMode">
+        </li>
+      </ul>
+    </div>
+
+    <!-- Contact Information -->
+    <div class="form-group">
+      <h3>Contact Information</h3>
+      <p><strong>Email:</strong> <input type="text" class="form-control" [(ngModel)]="userProfile.contact.email" name="email" [readonly]="!isEditMode"></p>
+      <p><strong>Phone:</strong> <input type="text" class="form-control" [(ngModel)]="userProfile.contact.phone" name="phone" [readonly]="!isEditMode"></p>
+      <p><strong>Address:</strong> <input type="text" class="form-control" [(ngModel)]="userProfile.contact.address" name="address" [readonly]="!isEditMode"></p>
+    </div>
+
+    <!-- Update Profile Button -->
+    <div class="form-group">
+      <button class="btn btn-primary" (click)="editProfile()" *ngIf="!isEditMode">Edit Profile</button>
+      <button class="btn btn-primary" (click)="saveProfile()" *ngIf="isEditMode">Save Profile</button>
+          </div>
+  </form>
+</div>
